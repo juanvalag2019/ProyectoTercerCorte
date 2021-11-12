@@ -12,6 +12,9 @@ public class Megaman : MonoBehaviour
     [SerializeField] Sprite fallingSprite;
     [SerializeField] Rigidbody2D myBody;
     [SerializeField] float jumpSpeed;
+    [SerializeField] GameObject deathParticles;
+    [SerializeField] AudioClip deathAudio;
+    bool pause = false;
 
     SpriteRenderer myRenderer;
     BoxCollider2D myCollider;
@@ -22,17 +25,31 @@ public class Megaman : MonoBehaviour
         myRenderer = GetComponent<SpriteRenderer>();
         myBody = GetComponent<Rigidbody2D>();
         myCollider = GetComponent<BoxCollider2D>();
+        StartCoroutine(ShowTime());
     }
 
     // Update is called once per frame
     void Update()
     {
-        Mover();
-        Saltar();
-        Falling();
-        Fire();
+        if (!pause)
+        {
+            Mover();
+            Saltar();
+            Falling();
+            Fire();
+        }
     }
 
+    IEnumerator ShowTime()
+    {
+        int count = 0;
+        while (true)
+        {
+            yield return new WaitForSeconds(1f);
+            count++;
+            Debug.Log("Tiempo: " + count);
+        }
+    }
     void Fire()
     {
         if (Input.GetKey(KeyCode.X))
@@ -107,5 +124,24 @@ public class Megaman : MonoBehaviour
         {
             myAnimator.SetBool("falling", true);
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            StartCoroutine(Die());
+        }
+    }
+
+    IEnumerator Die()
+    {
+        pause = true;
+        myAnimator.SetBool("death", true);
+        myBody.isKinematic = true;
+        yield return new WaitForSeconds(1);
+        Instantiate(deathParticles, transform.position, transform.rotation);
+        AudioSource.PlayClipAtPoint(deathAudio, Camera.main.transform.position);
+        Destroy(gameObject);
     }
 }

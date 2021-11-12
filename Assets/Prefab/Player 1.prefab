@@ -10,13 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 2055761502}
   - component: {fileID: 2055761503}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: pies
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2055761502
 Transform:
   m_ObjectHideFlags: 0
@@ -71,7 +71,7 @@ GameObject:
   - component: {fileID: 5131477652266428533}
   - component: {fileID: 4263534798900502186}
   - component: {fileID: 1480567613}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,7 +158,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.060191274, y: 0}
+  m_Offset: {x: -0.019855022, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -169,7 +169,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0685155, y: 2.125}
+  m_Size: {x: 0.98784304, y: 2.125}
   m_EdgeRadius: 0
 --- !u!50 &5131477652266428533
 Rigidbody2D:
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d39099490fa2527428373a4feb6cedfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 15
   pies: {fileID: 2055761503}
   idleSprite: {fileID: -6869773987950756324, guid: 8151fe9e46b4ed84ba825adc2da13699, type: 3}
   fallingSprite: {fileID: -4635356164159159118, guid: 8151fe9e46b4ed84ba825adc2da13699, type: 3}
