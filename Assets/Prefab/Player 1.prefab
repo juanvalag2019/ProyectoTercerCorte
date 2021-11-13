@@ -230,6 +230,11 @@ MonoBehaviour:
   myBody: {fileID: 0}
   jumpSpeed: 30
   deathParticles: {fileID: 6138255398276674566, guid: 0232a2c628c06a14d93b6469730f998f, type: 3}
-  deathAudio: {fileID: 8300000, guid: 3a948954d20e7b94991fe0742ba3a31e, type: 3}
+  audioClips:
+  - {fileID: 8300000, guid: d58439ee30523bd40a7caffdf057cbaf, type: 3}
+  - {fileID: 8300000, guid: 77cdb172768797345be69ae7118d5314, type: 3}
+  - {fileID: 8300000, guid: d26f7cd5f54c78647b152a0deb8b185b, type: 3}
+  - {fileID: 8300000, guid: c56a3e175ab66b44a94af3d1284df7b2, type: 3}
+  - {fileID: 8300000, guid: 3a948954d20e7b94991fe0742ba3a31e, type: 3}
   bullet: {fileID: 7577227113622075307, guid: 9d24b71c23c520d4f864e2f172a03c7c, type: 3}
   fireInterval: 2
