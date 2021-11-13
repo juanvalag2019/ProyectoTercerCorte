@@ -86,7 +86,7 @@ public class Megaman : MonoBehaviour
         }
     }
 
-   void Mover()
+    void Mover()
     {
         float mov = Input.GetAxis("Horizontal");
         if (mov != 0)
@@ -218,9 +218,10 @@ public class Megaman : MonoBehaviour
 
     IEnumerator Die()
     {
+
+        myBody.isKinematic = true;
         pause = true;
         myAnimator.SetBool("death", true);
-        myBody.isKinematic = true;
         yield return new WaitForSeconds(1);
         Instantiate(deathParticles, transform.position, transform.rotation);
         AudioSource.PlayClipAtPoint(deathAudio, Camera.main.transform.position);
