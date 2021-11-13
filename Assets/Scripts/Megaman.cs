@@ -13,8 +13,8 @@ public class Megaman : MonoBehaviour
     [SerializeField] Rigidbody2D myBody;
     [SerializeField] float jumpSpeed;
     [SerializeField] GameObject deathParticles;
-    [SerializeField] AudioClip deathAudio;
-    bool pause = false;
+    [SerializeField] AudioClip[] audioClips;
+    bool pause, groundAudioPlayed = false;
     [SerializeField] GameObject bullet;
 
     [SerializeField] float fireInterval = 2;
@@ -51,6 +51,11 @@ public class Megaman : MonoBehaviour
             Falling();
             Fire();
             Dash();
+            if (myAnimator.GetBool("grounded") && !groundAudioPlayed)
+            {
+                AudioSource.PlayClipAtPoint(audioClips[3], Camera.main.transform.position);
+                groundAudioPlayed = true;
+            }
         }
     }
 
@@ -68,6 +73,7 @@ public class Megaman : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.X) && Time.time >= nextFireAt)
         {
+            AudioSource.PlayClipAtPoint(audioClips[0], Camera.main.transform.position);
             myAnimator.SetLayerWeight(1, 1);
             layerTime = 5;
             Vector3 spawnPos = transform.position + new Vector3(lastDirection ? tamX / 2 : -tamX / 2, +0.08f, 0);
@@ -123,7 +129,9 @@ public class Megaman : MonoBehaviour
             myAnimator.SetBool("grounded", true);
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                AudioSource.PlayClipAtPoint(audioClips[1], Camera.main.transform.position);
                 myAnimator.SetBool("grounded", false);
+                groundAudioPlayed = false;
                 myAnimator.SetTrigger("takeof");
                 myAnimator.SetBool("jumping", true);
                 if (myAnimator.GetBool("dash"))
@@ -177,6 +185,7 @@ public class Megaman : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Z) && dash <= 0.3 && pressZ == true)
         {
+            AudioSource.PlayClipAtPoint(audioClips[2], Camera.main.transform.position);
             myAnimator.SetBool("dash", true);
             if (lastDirection)
             {
@@ -224,7 +233,7 @@ public class Megaman : MonoBehaviour
         myAnimator.SetBool("death", true);
         yield return new WaitForSeconds(1);
         Instantiate(deathParticles, transform.position, transform.rotation);
-        AudioSource.PlayClipAtPoint(deathAudio, Camera.main.transform.position);
+        AudioSource.PlayClipAtPoint(audioClips[audioClips.Length - 1], Camera.main.transform.position);
         Destroy(gameObject);
     }
 }
