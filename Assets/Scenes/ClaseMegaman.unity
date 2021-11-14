@@ -6704,6 +6704,7 @@ MonoBehaviour:
   player: {fileID: 762421996}
   bullet: {fileID: 7577227113622075307, guid: 8d34d74437fb27c43b8d54a2595786fb, type: 3}
   fireInterval: 2
+  lives: 3
 --- !u!61 &1980514247
 BoxCollider2D:
   m_ObjectHideFlags: 0
