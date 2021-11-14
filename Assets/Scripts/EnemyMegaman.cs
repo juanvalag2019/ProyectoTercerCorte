@@ -8,10 +8,13 @@ public class EnemyMegaman : MonoBehaviour
 
     [SerializeField] float range;
     [SerializeField] GameObject player;
+    [SerializeField] int lives = 3;
+    Animator myAnimator;
     // Start is called before the first frame update
     void Start()
     {
 
+        myAnimator = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -30,5 +33,22 @@ public class EnemyMegaman : MonoBehaviour
     {
         Gizmos.color = new Color(1f, 0f, 0f, 0.33f);
         Gizmos.DrawSphere(transform.position, range);
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Bullet"))
+        {
+            // GameObject.FindObjectOfType<GameManager>();
+            lives--;
+            if (lives < 1)
+            {
+                myAnimator.SetBool("death", true);
+            }
+        }
+    }
+    public void Destroy()
+    {
+        Destroy(this.gameObject);
     }
 }
