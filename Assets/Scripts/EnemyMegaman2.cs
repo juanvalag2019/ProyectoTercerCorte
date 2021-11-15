@@ -12,14 +12,18 @@ public class EnemyMegaman2 : MonoBehaviour
     [SerializeField] float fireInterval = 2;
     float nextFireAt, tamX, tamY;
     [SerializeField] int lives = 3;
+    float toDecrease;
     Animator myAnimator;
     bool canFire = true;
+    private GameObject healthBar;
     // Start is called before the first frame update
     void Start()
     {
         tamX = (GetComponent<SpriteRenderer>()).bounds.size.x;
         tamY = (GetComponent<SpriteRenderer>()).bounds.size.y;
         myAnimator = gameObject.GetComponent<Animator>();
+        healthBar = transform.Find("HealthBar").gameObject;
+        toDecrease = 1f / (float)lives;
     }
 
     // Update is called once per frame
@@ -42,7 +46,7 @@ public class EnemyMegaman2 : MonoBehaviour
     {
         if (Time.time >= nextFireAt && canFire)
         {
-            Vector3 spawnPos = transform.position + new Vector3(-(tamX / 2) - 0.2f, +0.08f, 0);
+            Vector3 spawnPos = transform.position + new Vector3(-(tamX / 2) - 1f, +0.08f, 0);
             GameObject bullet = Instantiate(this.bullet, spawnPos, transform.rotation);
             nextFireAt += fireInterval;
         }
@@ -58,9 +62,14 @@ public class EnemyMegaman2 : MonoBehaviour
         if (other.gameObject.CompareTag("Bullet"))
         {
             // GameObject.FindObjectOfType<GameManager>();
-            lives--;
-            if (lives < 1)
+            if (lives >= 1)
             {
+                DecreaseHealthBar();
+                lives--;
+            }
+            if (lives == 0)
+            {
+                healthBar.SetActive(false);
                 canFire = false;
                 myAnimator.SetBool("death", true);
             }
@@ -69,5 +78,12 @@ public class EnemyMegaman2 : MonoBehaviour
     public void Destroy()
     {
         Destroy(this.gameObject);
+    }
+    private void DecreaseHealthBar()
+    {
+        Transform barT = healthBar.transform.Find("Bar");
+        float x = barT.localScale.x;
+        barT.localScale = new Vector3(x - toDecrease, 1);
+        Debug.Log(toDecrease);
     }
 }

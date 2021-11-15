@@ -6,7 +6,7 @@ public class BulletMegaman : MonoBehaviour
 {
     Animator myAnimator;
     public bool direction;
-    private float speed = 10f;
+    private float speed = 20f;
     // Start is called before the first frame update
     void Start()
     {
