@@ -26,7 +26,7 @@ public class Megaman : MonoBehaviour
     float layerTime = 2;
     int jump;
     float dash;
-    bool pressZ;
+    bool pressZ, playDash = true;
 
     void Start()
     {
@@ -185,19 +185,17 @@ public class Megaman : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Z) && dash <= 0.3 && pressZ == true)
         {
-            AudioSource.PlayClipAtPoint(audioClips[2], Camera.main.transform.position);
+            if (playDash)
+            {
+                AudioSource.PlayClipAtPoint(audioClips[2], Camera.main.transform.position);
+                playDash = false;
+            }
             myAnimator.SetBool("dash", true);
-            if (lastDirection)
-            {
-                transform.Translate(new Vector2(speed * Time.deltaTime, 0));
-            }
-            else
-            {
-                transform.Translate(new Vector2(-speed * Time.deltaTime, 0));
-            }
+            transform.Translate(new Vector2((lastDirection ? speed : -speed) * Time.deltaTime, 0));
             dash = dash + 0.5f * Time.deltaTime;
             if (dash >= 0.3f)
             {
+
                 pressZ = false;
                 dash = 1;
             }
@@ -211,6 +209,7 @@ public class Megaman : MonoBehaviour
             }
             if (dash <= 0)
             {
+                playDash = true;
                 pressZ = true;
             }
         }

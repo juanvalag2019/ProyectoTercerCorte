@@ -10,11 +10,15 @@ public class EnemyMegaman : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] int lives = 3;
     Animator myAnimator;
+    private GameObject healthBar;
+
+    float toDecrease;
     // Start is called before the first frame update
     void Start()
     {
-
+        healthBar = transform.Find("HealthBar").gameObject;
         myAnimator = gameObject.GetComponent<Animator>();
+        toDecrease = 1f / (float)lives;
     }
 
     // Update is called once per frame
@@ -40,9 +44,14 @@ public class EnemyMegaman : MonoBehaviour
         if (other.gameObject.CompareTag("Bullet"))
         {
             // GameObject.FindObjectOfType<GameManager>();
-            lives--;
-            if (lives < 1)
+            if (lives >= 1)
             {
+                DecreaseHealthBar();
+                lives--;
+            }
+            if (lives == 0)
+            {
+                healthBar.SetActive(false);
                 myAnimator.SetBool("death", true);
             }
         }
@@ -50,5 +59,12 @@ public class EnemyMegaman : MonoBehaviour
     public void Destroy()
     {
         Destroy(this.gameObject);
+    }
+
+    private void DecreaseHealthBar()
+    {
+        Transform barT = healthBar.transform.Find("Bar");
+        float x = barT.localScale.x;
+        barT.localScale = new Vector2(x - toDecrease, 1);
     }
 }
