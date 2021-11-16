@@ -52,6 +52,7 @@ public class EnemyMegaman : MonoBehaviour
             if (lives == 0)
             {
                 healthBar.SetActive(false);
+                gameObject.isStatic = true;
                 myAnimator.SetBool("death", true);
             }
         }
