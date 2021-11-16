@@ -18,6 +18,7 @@ public class Megaman : MonoBehaviour
     [SerializeField] GameObject bullet;
 
     [SerializeField] float fireInterval = 2;
+    [SerializeField] GameOverScreen gameOver;
     float nextFireAt, tamX, tamY;
     bool lastDirection = true;
 
@@ -227,12 +228,13 @@ public class Megaman : MonoBehaviour
     IEnumerator Die()
     {
 
-        myBody.isKinematic = true;
+        gameObject.isStatic = true;
         pause = true;
         myAnimator.SetBool("death", true);
         yield return new WaitForSeconds(1);
         Instantiate(deathParticles, transform.position, transform.rotation);
         AudioSource.PlayClipAtPoint(audioClips[audioClips.Length - 1], Camera.main.transform.position);
         Destroy(gameObject);
+        gameOver.SetUp();
     }
 }
