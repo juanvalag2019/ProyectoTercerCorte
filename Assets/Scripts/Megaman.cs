@@ -19,6 +19,7 @@ public class Megaman : MonoBehaviour
 
     [SerializeField] float fireInterval = 2;
     [SerializeField] GameOverScreen gameOver;
+    [SerializeField] EnemyCounter enemyCounter;
     float nextFireAt, tamX, tamY;
     bool lastDirection = true;
 
@@ -235,6 +236,7 @@ public class Megaman : MonoBehaviour
         Instantiate(deathParticles, transform.position, transform.rotation);
         AudioSource.PlayClipAtPoint(audioClips[audioClips.Length - 1], Camera.main.transform.position);
         Destroy(gameObject);
+        enemyCounter.Hide();
         gameOver.SetUp();
     }
 }
